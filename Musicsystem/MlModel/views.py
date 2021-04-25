@@ -62,7 +62,11 @@ def model():
     y_pred=model.predict(x_test)
     y_pre=model.predict([feature])
     print(y_pre)
+    render_playlist(y_pre)
 def homepage(request):
+
+    return render(request,'index.html')
+def get_audio_input(request):
     import pyaudio
     import wave
     from array import array
@@ -71,7 +75,7 @@ def homepage(request):
         CHUNK=1024
         FORMAT=pyaudio.paInt16
         CHANNELS=2
-        RECORD_SECONDS=7
+        RECORD_SECONDS=5
         RATE=44100
         p=pyaudio.PyAudio()
         stream=p.open(format=FORMAT,channels=CHANNELS,rate=RATE,input=True,frames_per_buffer=CHUNK)
@@ -90,6 +94,11 @@ def homepage(request):
         wf.close()
     record('output.wav')
     model()
+    return render(request,'recorder.html')
 
-    return render(request,'index.html')
- 
+def render_playlist(emotion):
+    print(emotion)
+    import spotipy
+    
+
+
